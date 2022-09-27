@@ -49,3 +49,30 @@ contract Election {
 ```
 
 see [here](https://consensys.net/blog/blockchain-development/solidity-best-practices-for-smart-contract-security/)
+
+### 8. Incorrect modifier:
+
+**WARNING**: If a `modifier` does not execute `_` or `revert`, the function using that modifier will *return the default value* causing unexpected behavior.
+
+**BEST PRACTICE**: All paths in a modifier should execute `_` or `revert`
+
+> If the condition in `myModif` is false, the execution of `get()` returns 0. It is better to revert:
+
+Solution: All paths in a modifier should execute _ or revert
+
+```modifier goodModif(){
+
+if(..)
+
+{ _; }
+
+else
+
+{ revert(“ERROR”);
+
+// or _; }
+
+}
+
+function get() goodModif returns(address){}
+```
