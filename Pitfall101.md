@@ -274,7 +274,7 @@ see [here](https://consensys.net/blog/blockchain-development/solidity-best-pract
 **WARNING**: Setters of `address` type parameters should include a *zero-address check* otherwise contract functionality may become **inaccessible** or **tokens burnt forever**.
 
 **BEST PRACTICE**: Validate that all address inputs are not zero-address 
-**require(shareErc20Temp != address(0), "shareErc20Temp invalid");
+**require(shareErc20Temp != address(0), "shareErc20Temp invalid");**
 
 
 see [here](https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation)
