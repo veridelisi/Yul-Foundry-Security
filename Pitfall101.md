@@ -60,7 +60,8 @@ see [here](https://consensys.net/blog/blockchain-development/solidity-best-pract
 
 Solution: All paths in a modifier should execute _ or revert
 
-```modifier goodModif(){
+```
+modifier goodModif(){
 
 if(..)
 
