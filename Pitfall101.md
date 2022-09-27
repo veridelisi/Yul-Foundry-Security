@@ -77,3 +77,20 @@ else
 
 function get() goodModif returns(address){}
 ```
+
+### 10. Void constructor:
+
+**WARNING**: Calls to *unimplemented* base contract constructors leads to misplaced assumptions.
+
+**BEST PRACTICE**: Check if the *constructor is implemented*, or remove call if not.
+
+> The constructor of `contract B` calls the unimplemented constructor of `A`
+
+```solidity
+contract A{}
+contract B is A{
+    constructor() public A(){}
+}
+```
+
+see [here](https://github.com/crytic/slither/wiki/Detector-Documentation#void-constructor)
