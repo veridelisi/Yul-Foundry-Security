@@ -136,5 +136,7 @@ contract A {
 }
 ```
 
+When someone will cal function setVars from contract A, delegatecall will be called. Inside delegatecall we see that it will call function setVars(uint256) from contract with address equal to _contract. The value which will be sent to this function is equal to _num. Thanks delegatecall setVars function from contract B will start execute. But here is the core of it. If this function change the value of any variable, it will be change not in contract B, but in contract A. How function setVars from contract B will know which variable change?  In contract B function setVars set num (variable in slot number 0) to _num, sender (variable in slot number 1) to msg.sender and value (variable in slot number 2) to msg.value. **When we call this function by delegatecall we set the variable in slot number 0 in contract A to _num, the variable in slot number 1 in contract A to msg.sender and so on. Therefore, it is very important to have the same storage layout in both contract.**
+
 see [here](https://solidity-by-example.org/delegatecall/)
 
