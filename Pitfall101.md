@@ -140,3 +140,33 @@ When someone will cal function setVars from contract A, delegatecall will be cal
 
 see [here](https://solidity-by-example.org/delegatecall/)
 
+### 13. Reentrancy vulnerabilities:
+
+*Untrusted external contract calls* could *call back* to the calling contract, leading to unexpected results such as *multiple withdrawals* or *out-of-order events*.
+
+**BEST PRACTICE**: Use *check-effects-interactions* pattern or *reentrancy guards*.
+
+```solidity
+
+
+  function withdrawBAD(uint amount) public{
+    // THIS CODE IS UNSECURE: REENTRANCY
+    // check-interact-effect pattern implemented
+    if (credit[msg.sender]>= amount) {
+      require(msg.sender.call.value(amount)());
+      credit[msg.sender]-=amount;
+    }
+  }  
+  function withdrawTRUE(uint amount) public{
+    // THIS CODE IS SECURE: REENTRANCY
+    // check-interact-effect pattern implemented
+    if (credit[msg.sender]>= amount) {
+      credit[msg.sender]-=amount;
+      require(msg.sender.call.value(amount)());
+    
+    }
+  }  
+ 
+```
+
+see [here](https://swcregistry.io/docs/SWC-107)
