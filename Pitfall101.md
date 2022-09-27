@@ -144,14 +144,15 @@ see [here](https://solidity-by-example.org/delegatecall/)
 
 *Untrusted external contract calls* could *call back* to the calling contract, leading to unexpected results such as *multiple withdrawals* or *out-of-order events*.
 
-**BEST PRACTICE**: Use *check-effects-interactions* pattern or *reentrancy guards*.
+**BEST PRACTICE**: Use *check-effects-interactions* pattern or *reentrancy guards* or *Ensure all state changes happen before calling external contracts*
+
 
 ```solidity
 
 
   function withdrawBAD(uint amount) public{
     // THIS CODE IS UNSECURE: REENTRANCY
-    // check-interact-effect pattern implemented
+    // check-interact-effect pattern UNimplemented
     if (credit[msg.sender]>= amount) {
       require(msg.sender.call.value(amount)());
       credit[msg.sender]-=amount;
