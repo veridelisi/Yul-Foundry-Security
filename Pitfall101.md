@@ -244,3 +244,37 @@ see [here](https://swcregistry.io/docs/SWC-132)
 **BEST PRACTICE**: Remove `payable` attributes, or add a withdraw function.
 
 see [here](https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether)
+
+### 30. Dangerous usage of tx.origin:
+
+**WARNING**: Use of `tx.origin` for authorization may be abused by a Man In The Middle (MITM) malicious contract forwarding calls from the legitimate user who interacts with it.
+
+**BEST PRACTICE**: Do not use `tx.origin` for authorization. Use `msg.sender` instead.
+
+see [here](https://swcregistry.io/docs/SWC-115)
+
+### 31. Contract check:
+
+**WARNING**: Checking if a call was made from a contract account is typically done using `extcodesize > 0` check, which may be circumvented by a contract during construction when it does not have source code available.
+
+**ALTERNATIVE**: Checking if `tx.origin == msg.sender` is another option to verify if an account is a contract.
+
+**CAVEAT**: Both methods have implications that need to be considered.
+
+see [here](https://consensys.net/blog/blockchain-development/solidity-best-practices-for-smart-contract-security/)
+
+### 46. Unindexed event parameters:
+
+**WARNING**: Parameters of certain events are expected to be `indexed` (e.g. ERC20 Transfer/Approval events) so that they’re included in the block’s bloom filter for faster access.
+
+**WARNING**: Failure to mark event parameters as `indexed`, when expected, might confuse off-chain tooling looking for such events.
+
+### 49. Missing zero address validation:
+
+**WARNING**: Setters of `address` type parameters should include a *zero-address check* otherwise contract functionality may become **inaccessible** or **tokens burnt forever**.
+
+**BEST PRACTICE**: Validate that all address inputs are not zero-address 
+**require(shareErc20Temp != address(0), "shareErc20Temp invalid");
+
+
+see [here](https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation)
