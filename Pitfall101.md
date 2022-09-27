@@ -171,3 +171,34 @@ see [here](https://solidity-by-example.org/delegatecall/)
 ```
 
 see [here](https://swcregistry.io/docs/SWC-107)
+
+### 15. Avoid transfer()/send() as reentrancy mitigations:
+
+`transfer()` and `send()` have been previously recommended as a security best-practice to prevent reentrancy attacks because they only *forward 2300 gas*.
+
+**WARNING**: the *gas repricing* of opcodes in certain hard forks *may break deployed contracts* depending on the 2300 gas stipend.
+
+**BEST PRACTICE**: Use `call()` to send Ether, without hardcoded gas limits. Ensure *reentrancy protection* via *checks-effects-interactions pattern* or *reentrancy guards*.
+
+> One should avoid hardcoded gas limits in calls, because hard forks may change opcode gas costs and break deployed contracts:
+
+```solidity
+contract Vulnerable {
+    function withdraw(uint256 amount) external {
+        // This forwards 2300 gas, which may not be enough if the recipient
+        // is a contract and gas costs change.
+        msg.sender.transfer(amount);
+    }
+}
+
+contract Fixed {
+    function withdraw(uint256 amount) external {
+        // This forwards all available gas. Be sure to check the return value!
+        (bool success, ) = msg.sender.call.value(amount)("");
+        require(success, "Transfer failed.");
+    }
+}
+```
+
+see [here](https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/)
+see [here](https://swcregistry.io/docs/SWC-134)
