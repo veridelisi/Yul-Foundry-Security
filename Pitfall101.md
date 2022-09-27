@@ -1,14 +1,8 @@
-#### [26. Unexpected Ether](#ether)
- * [The Vulnerability](#ether-vuln)
- * [Preventative Techniques](#ether-prev)
- * [Real-World Examples: Unknown](#ether-example)
-
 
 <h2 id="ether"><span id="SP-3">26. Unexpected Ether</span></h2>
 
 Typically when ether is sent to a contract, it must execute either the fallback function, or another function described in the contract. There are two exceptions to this, where ether can exist in a contract without having executed any code. Contracts which rely on code execution for every ether sent to the contract can be vulnerable to attacks where ether is forcibly sent to a contract.
 
-For further reading on this, see [How to Secure Your Smart Contracts: 6](https://medium.com/loom-network/how-to-secure-your-smart-contracts-6-solidity-vulnerabilities-and-how-to-avoid-them-part-2-730db0aa4834) and [ Solidity security patterns - forcing ether to a contract ](http://danielszego.blogspot.com.au/2018/03/solidity-security-patterns-forcing.html).
 
 <h3 id="ether-vuln">The Vulnerability</h3>
 
