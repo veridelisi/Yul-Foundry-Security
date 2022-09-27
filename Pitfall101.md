@@ -233,3 +233,6 @@ A `contract` can **receive Ether** via:
 **WARNING**: Contract logic depending on `this.balance` can therefore be manipulated.
 
 **BEST PRACTICE**: Do not make assumptions regarding `this.balance` for contract logic.
+
+see [here](https://github.com/sigp/solidity-security-blog#3-unexpected-ether-1)
+see [here](https://swcregistry.io/docs/SWC-132)
