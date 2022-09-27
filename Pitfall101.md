@@ -103,7 +103,7 @@ see [here](https://github.com/crytic/slither/wiki/Detector-Documentation#void-co
 
 > This proxy pattern is not secure if `callee` is Untrusted
 
-```
+```solidity
 
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.13;
@@ -115,10 +115,10 @@ contract B {
     address public sender;
     uint public value;
 
-   ** function setVars(uint _num)** public payable {
-      **  num = _num;**
-        **sender = msg.sender;**
-        **value = msg.value;**
+ function setVars(uint _num)** public payable {
+      num = _num;
+      sender = msg.sender;
+      value = msg.value;
     }
 }
 
@@ -129,8 +129,8 @@ contract A {
 
     function setVars(address _contract, uint _num) public payable {
         // A's storage is set, B is not modified.
-       ** (bool success, bytes memory data) = _contract.delegatecall(**
-           ** abi.encodeWithSignature("setVars(uint256)", _num)**
+       (bool success, bytes memory data) = _contract.delegatecall(
+        abi.encodeWithSignature("setVars(uint256)", _num)
         );
     }
 }
