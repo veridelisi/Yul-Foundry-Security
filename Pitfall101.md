@@ -236,3 +236,11 @@ A `contract` can **receive Ether** via:
 
 see [here](https://github.com/sigp/solidity-security-blog#3-unexpected-ether-1)
 see [here](https://swcregistry.io/docs/SWC-132)
+
+### 29. Locked Ether:
+
+**WARNING**: Contracts that accept Ether via `payable` functions but without withdrawal mechanisms will lock up that Ether.
+
+**BEST PRACTICE**: Remove `payable` attributes, or add a withdraw function.
+
+see [here](https://github.com/crytic/slither/wiki/Detector-Documentation#contracts-that-lock-ether)
