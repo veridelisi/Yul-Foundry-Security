@@ -1,3 +1,5 @@
+
+//https://veridelisi.medium.com/foundry-ii-e7e3d1527700
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.15;
 
@@ -47,10 +49,12 @@ contract ContractTest is Test {
 
     function setUp() public {
         EtherGameContract = new EtherGame();
-        alice = vm.addr(1);
-        eve = vm.addr(2);
-        vm.deal(address(alice), 1 ether);   
-        vm.deal(address(eve), 1 ether); 
+        //alice = vm.addr(1);                                    
+        alice = makeAddr("alice");                                     
+        // eve = vm.addr(2);                                     
+        eve = makeAddr("eve"); 
+        vm.deal(alice, 1 ether);   
+        vm.deal(eve, 2 ether); 
     }
 
     function testFailSelfdestruct() public {
@@ -72,8 +76,12 @@ contract ContractTest is Test {
         AttackerContract.dos{value: 5 ether}();
 
         console.log("Balance of EtherGameContract", address(EtherGameContract).balance);
-        console.log("Exploit completed, Game is over");
-        EtherGameContract.deposit{value: 1 ether}(); // This call will fail due to contract destroyed.
+        
+        
+        console.log("Eve deposit 1 Ether...");
+        vm.prank(eve);
+        EtherGameContract.deposit{value: 1 ether}();
+        //This call will fail due to contract destroyed.
     }
 }
 
