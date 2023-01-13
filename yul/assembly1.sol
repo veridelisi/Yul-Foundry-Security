@@ -40,6 +40,29 @@ function getXwithYul() public view returns (uint256) {
         }
     }
     
+    function view_b() external view returns (uint24) {
+    assembly {
+        // before: 00000000000000 047b37ef4d76c2366f795fb557e3c15e0607b7d8 000014 000a
+        //                                                                         ^
+        // after:  0000 00000000000000 047b37ef4d76c2366f795fb557e3c15e0607b7d8 000014
+        //          ^
+        let v := shr(0x10, sload(0x01))
+
+        // If both characters aren't 0, keep the bit (1). Otherwise, set to 0.
+        // mask:   0000000000000000000000000000000000000000000000000000000000 FFFFFF
+        // v:      000000000000000000047b37ef4d76c2366f795fb557e3c15e0607b7d8 000014
+        // result: 0000000000000000000000000000000000000000000000000000000000 000014
+        v := and(0xffffff, v)
+
+        // Store in memory bc return uses memory.
+        mstore(0x40, v)
+
+        // Return reads left to right.
+        // Since our value is far right we can just return 32 bytes from the 64th byte in memory.
+        return(0x40, 0x20)
+    }
+}
+    
    //          unused bytes                     c                        b    a
 // before: 00000000000000 047b37ef4d76c2366f795fb557e3c15e0607b7d8 000014 000a
 //          unused bytes                     c                        b    a
