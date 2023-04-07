@@ -13,10 +13,14 @@ contract HelloWorld {
             // Store the string offset in mem[0x00].
             // This is an ABI requirement, 0x20 must be stored at any chosen offset.
             mstore(0x00, 0x20)
+            
             // Store the length of the string in mem[offset + 32 bytes].
-            mstore(0x20, 0x12) // 0x0c = 12, length of "Hello World!".
+            mstore(0x20, 0x12) // 0x12 = 18, length of "VivaMexicoCabrones".
+            
             // Store the string in mem[offset + 64 bytes].
             mstore(0x40, greet)
+            
+            
             // Returns the bytes from mem[offset to offset+size]
             return(0x00, 0x60)
         }
